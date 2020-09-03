@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:property-placeholder
+		location="app.properties" />
+
+	<bean name="customerRepository"
+		class="com.pluralsight.repository.HibernateCustomerRepositoryImpl">
+		<property name="dbUserName" value="${dbUserName}"></property>
+	</bean>
+
+
+	<!-- constructor injection wired by name of the reference customerRepository -->
+	<bean name="customerService"
+		class="com.pluralsight.service.CustomerServiceImpl" scope="prototype">
+		 <constructor-arg index="0" ref="customerRepository"/> 
+		 </bean>
+		<!-- if auto wired no need this line -->
+
+
+	<!-- setter injection wired by name of the reference customerRepository -->
+
+	<bean name="customerServic"
+		class="com.pluralsight.service.CustomerServiceImpl" >
+		<property name="customerRepository" ref="customerRepository" />
+	</bean>
+	<!--default scope of bean is singleton which is why can create only one 
+		bean at a time -->
+
+
+
+
+
+
+
+
+
+</beans>
